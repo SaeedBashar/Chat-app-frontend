@@ -1,12 +1,19 @@
 
-import SignIn from './components/auth/signin';
-
+// import SignIn from './components/auth/signin';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import Navigation from './components/navigation/navigation';
+import ChatList from './components/chatList/chatList';
 
-function App() {
+
+const App = ()=> {
+
+  
   return (
     <div className="App">
-      <SignIn />
+      <Navigation />
+      <ChatList />
+      {/* <SignIn /> */}
     </div>
   );
 }
