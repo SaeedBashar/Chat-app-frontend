@@ -18,3 +18,17 @@
     margin-left: -30px;
     background: none;
 }
+
+.emoji-div {
+    position: relative;
+}
+
+.picker-div {
+    position: absolute;
+    top: -425px;
+}
+
+.picker-div aside {
+    width: 290px!important;
+    height: 420px!important;
+}

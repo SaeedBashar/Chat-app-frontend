@@ -30,3 +30,7 @@ code {
 .orange-text {
   color : #ed7218f2;
 }
+
+.EmojiPickerReact ul.epr-emoji-list {
+  padding-left: 20px!important;
+}

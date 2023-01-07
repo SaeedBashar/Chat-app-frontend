@@ -11,9 +11,11 @@ const MsgInput = ()=>{
     return (
         <>
             <form className={`${classes['msg-form']} d-flex align-items-center`} method="POST" action="#">
-                <div>
-                    <i className="bi bi-emoji-smile" onClick={()=>setShowPicker(!showPicker)}></i>
-                    {showPicker && <Picker onEmojiClick={handleEmojiSelect} />}
+                <div className={`p-2 ${classes['emoji-div']}`}>
+                    <i className="bi bi-emoji-smile" style={{fontSize: '20px'}} onClick={()=>setShowPicker(!showPicker)}></i>
+                    <div className={classes['picker-div']}>
+                        {showPicker && <Picker onEmojiClick={handleEmojiSelect} />}
+                    </div>
                 </div>
                 <input type="text" name="query" placeholder="Search" title="Enter search keyword"/>
                 <button type="submit" title="Search"><i className="bi bi-send"></i></button>
