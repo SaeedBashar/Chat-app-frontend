@@ -1,0 +1,28 @@
+
+.chatMain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.sent {
+    display : flex;
+    justify-content: flex-end;
+}
+
+.received {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.msgContent {
+    border: 1px solid #9090bd;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.msgContent p {
+    margin: auto;
+}
