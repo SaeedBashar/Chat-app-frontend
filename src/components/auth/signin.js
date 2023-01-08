@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
 // import ButtonRipple from '../button/button';
 import { ToastContainer, toast } from "react-toastify";
+import axios from 'axios';
 import "react-toastify/dist/ReactToastify.css";
-import './auth.css';
+// import './auth.css';
 
 const Signin = ()=>{
 
+    const navigate = useNavigate()
     const [userInfo, setInfo] = useState({ 
                                             username: "", email: "", 
                                             password: "", confirmPassword: "" 
@@ -67,6 +70,31 @@ const Signin = ()=>{
     const handleSubmit = async (event) =>{
         event.preventDefault();
         if (validateForm()) {
+            if(isSignUpPage) {
+                const { email, username, password } = userInfo;
+                var { data } = await axios.post('http://localhost:4000/auth/signup', {
+                    username,
+                    email,
+                    password,
+                });
+                console.log(data)
+            }
+
+            if(!isSignUpPage) {
+                const { username, password } = userInfo;
+                var { data } = await axios.post('http://localhost:4000/auth/signin', {
+                    username,
+                    password,
+                });
+                console.log(data)
+            }
+            
+            if (data.status === false) toast.error(data.msg, toastOptions);
+
+            if (data.status === true) {
+                sessionStorage.setItem('userInfo', JSON.stringify(data.user))
+                navigate("/");
+            }
             console.log(userInfo);
         } else {
             console.log("Failed to Sign In");
