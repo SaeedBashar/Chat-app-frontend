@@ -1,11 +1,10 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { io } from "socket.io-client";
 
 import ChatList from '../chatList/chatList';
-
 import Navigation from '../navigation/navigation';
-import { useEffect } from 'react';
 import { host, usersApi } from '../../apis/chat';
 import ChatContent from '../chatContent/chatContent';
 
@@ -27,6 +26,13 @@ const ChatMessages = ()=>{
         }
       }, []);
 
+    useEffect(() => {
+        if (currentUser) {
+            socket.current = io(host);
+            socket.current.emit("add-user", currentUser._id);
+        }
+    }, [currentUser]);
+      
     useEffect(()=>{
         if(currentUser){
             axios.get(`${usersApi}/${currentUser._id}`)
@@ -45,7 +51,7 @@ const ChatMessages = ()=>{
             <ChatList chats={chatList} onChatChange={(chat)=>setCurrentChat(chat)}/>
             
             {currentChat ? 
-                <ChatContent currentChat={currentChat}/>
+                <ChatContent currentChat={currentChat} socket={socket}/>
             : <div>Select A Chat</div>
             }
         </>

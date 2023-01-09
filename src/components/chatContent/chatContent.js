@@ -1,4 +1,4 @@
-import {useState, useRef, useEffect } from 'react';
+import {useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { messagesApi, msgSendApi } from '../../apis/chat';
@@ -6,9 +6,22 @@ import MsgInput from '../msgInput/msgInput';
 
 import classes from './chatContent.module.css';
 
-const ChatContent = ({currentChat})=>{
+const ChatContent = ({currentChat, socket})=>{
 
     const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState(null);
+
+    useEffect(() => {
+        if (socket.current) {
+          socket.current.on("msg-recieve", (msg) => {
+            setNewMessage({ fromSelf: false, message: msg });
+          });
+        }
+    }, []);
+
+    useEffect(() => {
+        newMessage && setMessages((prev) => [...prev, newMessage]);
+    }, [newMessage]);
     
     useEffect(() => {
         const data = JSON.parse(
@@ -22,12 +35,13 @@ const ChatContent = ({currentChat})=>{
             console.log(data)
             setMessages(data);
         });
-      }, [currentChat]);
+    }, [currentChat]);
 
     const handleMsgSend = async (msg) => {
         const data = JSON.parse(
             sessionStorage.getItem('userInfo')
         );
+
 
         axios.post(msgSendApi, {
             from: data._id,
@@ -40,6 +54,10 @@ const ChatContent = ({currentChat})=>{
                 const msgs = [...messages];
                 msgs.push({ fromSelf: true, message: msg });
                 setMessages(msgs);
+                socket.current.emit("send-msg", {
+                    to: currentChat._id,
+                    msg
+                  });
             }
         });
         
