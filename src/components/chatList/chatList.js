@@ -1,18 +1,17 @@
 
-
-const ChatList = ()=>{
+const ChatList = ({chats, onChatChange})=>{
 
     return (
         <aside id="sidebar" className="sidebar">
 
             <ul className="sidebar-nav" id="sidebar-nav">
 
-                <li className="nav-item">
-                    <a className="nav-link " href="index.html">
-                    <i className="bi bi-grid"></i>
-                    <span>Dashboard</span>
+                {chats.map(c=><li className="nav-item" key={c._id}>
+                    <a className="nav-link " onClick={()=>onChatChange(c)}>
+                    <i className="bi bi-person"></i>
+                    <span>{c.username}</span>
                     </a>
-                </li>
+                </li>)}
 
                 <li className="nav-heading">Pages</li>
 

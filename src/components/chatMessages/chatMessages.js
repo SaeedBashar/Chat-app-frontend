@@ -1,34 +1,54 @@
+import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-import MsgInput from '../msgInput/msgInput';
-import classes from './chatMessages.module.css';
+import ChatList from '../chatList/chatList';
+
+import Navigation from '../navigation/navigation';
+import { useEffect } from 'react';
+import { host, usersApi } from '../../apis/chat';
+import ChatContent from '../chatContent/chatContent';
 
 const ChatMessages = ()=>{
 
+    const socket = useRef();
+    const navigate = useNavigate()
+
+    const [chatList, setChatList] = useState([]);
+    const [currentChat, setCurrentChat] = useState(undefined);
+    const [currentUser, setCurrentUser] = useState(undefined);
+    
+    useEffect(() => {
+        if (!sessionStorage.getItem('userInfo')) {
+            navigate("/signin");
+        } else {
+            let user = JSON.parse(sessionStorage.getItem('userInfo'))
+            setCurrentUser(user);
+        }
+      }, []);
+
+    useEffect(()=>{
+        if(currentUser){
+            axios.get(`${usersApi}/${currentUser._id}`)
+            .then(({data})=>{
+                console.log(data)
+                setChatList(data);
+            });
+        }
+    }, [currentUser]) 
+
+   
+
     return (
-        <main id="main" className={`main ${classes.chatMain}`}>
-            <div className="modal-content" style={{height: '100%'}}>
-                <div className="modal-header">
-                    <h5 className="modal-title">Current Chat</h5>
-                </div>
-                <div className="modal-body">
-                <div>
-                    <div className={classes.sent}>
-                        <div className={classes.msgContent}>
-                            <p>Hello</p>
-                        </div>
-                    </div>
-                    <div className={classes.received}>
-                        <div className={classes.msgContent}>
-                            <p>xup</p>
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <div className="modal-footer">
-                    <MsgInput/>
-                </div>
-            </div>
-        </main>
+        <>
+            <Navigation/>
+            <ChatList chats={chatList} onChatChange={(chat)=>setCurrentChat(chat)}/>
+            
+            {currentChat ? 
+                <ChatContent currentChat={currentChat}/>
+            : <div>Select A Chat</div>
+            }
+        </>
     )
 }
 
