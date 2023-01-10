@@ -65,9 +65,9 @@ const ChatContent = ({currentChat, socket})=>{
 
     return (
         <main id="main" className={`main ${classes.chatMain}`}>
-            <div className="modal-content" style={{height: '100%'}}>
+            <div className={`modal-content`} style={{height: '100%'}}>
                 <div className="modal-header">
-                    <h5 className="modal-title">Current Chat</h5>
+                    <h5 className="modal-title">{currentChat.username}</h5>
                 </div>
                 <div className="modal-body">
                 <div>

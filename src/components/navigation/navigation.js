@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 
-const Navigation = ()=>{
-
+const Navigation = ({user})=>{
+    
     const toggleNotification = ()=>{
         document.querySelector('.notification-drop-btn').classList.toggle('show')
 
@@ -88,33 +88,13 @@ const Navigation = ()=>{
 
                 <a className="nav-link nav-profile d-flex align-items-center pe-0 profile-drop-btn" href="#" onClick={toggleProfile} data-bs-toggle="dropdown">
                     {/* <img src="#" alt="Profile" className="rounded-circle"/> */}
-                    <span className="d-none d-md-block dropdown-toggle ps-2">User Name</span>
+                    <span className="d-none d-md-block dropdown-toggle ps-2">{user && user.username}</span>
                 </a>
 
                 <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile profile-drop-ctn">
                     <li className="dropdown-header">
-                    <h6>User Name</h6>
-                    <span>Description</span>
-                    </li>
-                    <li>
-                    <hr className="dropdown-divider"/>
-                    </li>
-
-                    <li>
-                    <a className="dropdown-item d-flex align-items-center" href="users-profile.html">
-                        <i className="bi bi-person"></i>
-                        <span>My Profile</span>
-                    </a>
-                    </li>
-                    <li>
-                    <hr className="dropdown-divider"/>
-                    </li>
-
-                    <li>
-                    <a className="dropdown-item d-flex align-items-center" href="users-profile.html">
-                        <i className="bi bi-gear"></i>
-                        <span>Account Settings</span>
-                    </a>
+                    <h6>{user && user.username}</h6>
+                    <span>{user && user.email}</span>
                     </li>
                     <li>
                     <hr className="dropdown-divider"/>

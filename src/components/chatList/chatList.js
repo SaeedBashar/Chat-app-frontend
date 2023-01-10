@@ -13,15 +13,6 @@ const ChatList = ({chats, onChatChange})=>{
                     </a>
                 </li>)}
 
-                <li className="nav-heading">Pages</li>
-
-                <li className="nav-item">
-                    <a className="nav-link collapsed" href="users-profile.html">
-                    <i className="bi bi-person"></i>
-                    <span>Profile</span>
-                    </a>
-                </li>
-
             </ul>
 
         </aside>

@@ -93,7 +93,7 @@ const Signin = ()=>{
 
             if (data.status === true) {
                 sessionStorage.setItem('userInfo', JSON.stringify(data.user))
-                navigate("/chats");
+                navigate("/home");
             }
             console.log(userInfo);
         } else {
