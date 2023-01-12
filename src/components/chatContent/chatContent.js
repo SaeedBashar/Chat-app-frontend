@@ -69,7 +69,7 @@ const ChatContent = ({currentChat, socket})=>{
                 <div className="modal-header">
                     <h5 className="modal-title">{currentChat.username}</h5>
                 </div>
-                <div className="modal-body">
+                <div className={`modal-body ${classes['modal-body']}`}>
                 <div>
                     {
                         messages.map(m=>(

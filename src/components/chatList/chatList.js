@@ -12,9 +12,7 @@ const ChatList = ({chats, onChatChange})=>{
                     <span>{c.username}</span>
                     </a>
                 </li>)}
-
             </ul>
-
         </aside>
     )
 }

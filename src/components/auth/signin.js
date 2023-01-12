@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 import axios from 'axios';
+import { connect } from 'react-redux';
+
+import { userAdd } from '../../store/actions/actions';
+import {signinApi, signupApi } from '../../apis/chat';
 import "react-toastify/dist/ReactToastify.css";
 
-import {signinApi, signupApi } from '../../apis/chat';
-
-const Signin = ()=>{
+const Signin = props=>{
 
     const navigate = useNavigate()
     const [userInfo, setInfo] = useState({ 
@@ -93,6 +95,7 @@ const Signin = ()=>{
 
             if (data.status === true) {
                 sessionStorage.setItem('userInfo', JSON.stringify(data.user))
+                props.setUser(data.user);
                 navigate("/home");
             }
             console.log(userInfo);
@@ -216,4 +219,9 @@ const Signin = ()=>{
     )
 }
 
-export default Signin;
+const mapDispatchToProps = dispatch=>{
+    return {
+        setUser : (user)=>dispatch({type: userAdd, user : user})
+    }
+}
+export default connect(null, mapDispatchToProps)(Signin);

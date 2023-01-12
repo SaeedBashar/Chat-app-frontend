@@ -7,6 +7,10 @@
     bottom: 0;
 }
 
+.modal-body{
+    overflow-y: auto;
+}
+
 .sent {
     display : flex;
     justify-content: flex-end;

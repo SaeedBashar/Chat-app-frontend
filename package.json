@@ -1,5 +1,5 @@
 {
-  "name": "first",
+  "name": "chat-app-project",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -10,10 +10,13 @@
     "emoji-picker-react": "^4.4.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
     "react-router": "^6.6.1",
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.2",
     "socket.io-client": "^4.5.4",
     "web-vitals": "^2.1.4"
   },
