@@ -1,4 +1,4 @@
-import {useState, useEffect } from 'react';
+import {useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 import { messagesApi, msgSendApi } from '../../apis/chat';
@@ -7,13 +7,20 @@ import MsgInput from '../msgInput/msgInput';
 import classes from './chatContent.module.css';
 
 const ChatContent = ({currentChat, socket})=>{
-
+    
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState(null);
 
+    const scrollRef = useRef();
+   
     useEffect(() => {
-        if (socket.current) {
-          socket.current.on("msg-recieve", (msg) => {
+        scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, [messages]);
+      
+
+    useEffect(() => {
+        if (socket) {
+          socket.on("msg-recieve", (msg) => {
             setNewMessage({ fromSelf: false, message: msg });
           });
         }
@@ -54,7 +61,7 @@ const ChatContent = ({currentChat, socket})=>{
                 const msgs = [...messages];
                 msgs.push({ fromSelf: true, message: msg });
                 setMessages(msgs);
-                socket.current.emit("send-msg", {
+                socket.emit("send-msg", {
                     to: currentChat._id,
                     msg
                   });
@@ -73,7 +80,7 @@ const ChatContent = ({currentChat, socket})=>{
                 <div>
                     {
                         messages.map(m=>(
-                            <div className={`mb-2 ${m.fromSelf ? classes.sent : classes.received}`} key={m.createdAt}>
+                            <div ref={scrollRef} className={`mb-2 ${m.fromSelf ? classes.sent : classes.received}`} key={m.createdAt}>
                                 <div className={classes.msgContent}>
                                     <p>{m.message}</p>
                                 </div>

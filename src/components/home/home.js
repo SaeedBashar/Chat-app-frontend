@@ -1,27 +1,21 @@
-import { useRef, useState, useEffect } from 'react';
-import { Link, Outlet, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useEffect } from 'react';
+import { NavLink, Outlet, useNavigate, matchRoutes, useLocation } from 'react-router-dom';
+
 import { io } from "socket.io-client";
 import { connect } from 'react-redux';
 import { setSocket, setCurrentChat, userAdd } from '../../store/actions/actions';
 
 import ChatList from '../chatList/chatList';
 import Navigation from '../navigation/navigation';
-import { host, usersApi } from '../../apis/chat';
-import ChatContent from '../chatContent/chatContent';
+import { host } from '../../apis/chat';
 
 import classes from './home.module.css';
 import { getChats } from '../../store/actionCreators/actionCreaters';
 
 const ChatMessages = props=>{
 
-    // const socket = useRef();
     const navigate = useNavigate()
 
-    // const [chatList, setChatList] = useState([]);
-    // const [currentChat, setCurrentChat] = useState(undefined);
-    // const [currentUser, setCurrentUser] = useState(undefined);
-    
     useEffect(() => {
         if(!props.user){
             if (!sessionStorage.getItem('userInfo')) {
@@ -53,7 +47,11 @@ const ChatMessages = props=>{
     //         });
     //     }
     // }, [props.user]) 
-
+    let getPath = ()=>{
+        let path = window.location.href
+        return path.substring(path.lastIndexOf('/') + 1)
+    }
+    
     return (
         <>
             <Navigation user={props.user}/>
@@ -63,28 +61,28 @@ const ChatMessages = props=>{
                 <ul className="nav nav-tabs nav-tabs-bordered">
 
                     <li className="nav-item">
-                        <Link to='/home' 
-                            className="nav-link active" data-bs-toggle="tab" 
-                            data-bs-target="#profile-overview">Chats</Link>
+                        <NavLink to='/home' 
+                            className={`nav-link ${getPath().endsWith('home') ? 'active':null}`} 
+                            data-bs-toggle="tab" 
+                            data-bs-target="#profile-overview">Chats</NavLink>
                     </li>
 
                     <li className="nav-item">
-                        <Link to="/home/status" className="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Status</Link>
+                        <NavLink to="/home/status" 
+                        className={`nav-link ${getPath().endsWith('status') ? 'active':null}`} 
+                        data-bs-toggle="tab" 
+                        data-bs-target="#profile-edit">Status</NavLink>
                     </li>
 
                     <li className="nav-item">
-                        <Link to="/home/calls" className="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Calls</Link>
+                        <NavLink to="/home/calls" 
+                        className={`nav-link ${getPath().endsWith('calls') ? 'active':null}`} 
+                        data-bs-toggle="tab" data-bs-target="#profile-settings">Calls</NavLink>
                     </li>
 
                 </ul>
             
                 <div className="tab-content pt-2">
-                
-                    {
-                        props.currentChat ? 
-                        <ChatContent currentChat={props.currentChat} socket={props.socket}/>
-                        : <div>Select A Chat</div>
-                    }
                     <Outlet/>
                 </div>
             </main>

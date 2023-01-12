@@ -5,14 +5,15 @@ import Home from '../../components/home/home';
 import Status from '../../components/status/status';
 import Calls from '../../components/calls/calls';
 import ChatContent from '../../components/chatContent/chatContent';
+import Chats from '../../components/chats/chats';
 
 const paths = ()=>{
 
     return (
         <>
             <Routes>
-                <Route path='home' element={<><Outlet/></>}>
-                    <Route index element={<Home/>}/>
+                <Route path='home' element={<><Home/></>}>
+                    <Route index element={<Chats/>}/>
                     <Route path="status" element={<Status/>} />
                     <Route path="calls" element={<Calls/>} />
                 </Route>
