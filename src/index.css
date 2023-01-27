@@ -56,3 +56,7 @@ code {
 ::-webkit-scrollbar-thumb:hover {
   background: #858585;
 }
+
+.nav-link {
+  cursor: pointer;
+}

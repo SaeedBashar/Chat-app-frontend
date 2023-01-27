@@ -21,6 +21,7 @@ const ChatContent = ({currentChat, socket})=>{
     useEffect(() => {
         if (socket) {
           socket.on("msg-recieve", (msg) => {
+            console.log('msg sent')
             setNewMessage({ fromSelf: false, message: msg });
           });
         }
@@ -79,8 +80,8 @@ const ChatContent = ({currentChat, socket})=>{
                 <div className={`modal-body ${classes['modal-body']}`}>
                 <div>
                     {
-                        messages.map(m=>(
-                            <div ref={scrollRef} className={`mb-2 ${m.fromSelf ? classes.sent : classes.received}`} key={m.createdAt}>
+                        messages.map((m, i)=>(
+                            <div ref={scrollRef} className={`mb-2 ${m.fromSelf ? classes.sent : classes.received}`} key={m.createdAt + i}>
                                 <div className={classes.msgContent}>
                                     <p>{m.message}</p>
                                 </div>

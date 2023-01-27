@@ -4,7 +4,6 @@ import Signin from '../../components/auth/signin';
 import Home from '../../components/home/home';
 import Status from '../../components/status/status';
 import Calls from '../../components/calls/calls';
-import ChatContent from '../../components/chatContent/chatContent';
 import Chats from '../../components/chats/chats';
 
 const paths = ()=>{

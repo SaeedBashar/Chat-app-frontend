@@ -24,7 +24,7 @@ const MsgInput = ({msgSend})=>{
     return (
         <form className={`${classes['msg-form']} d-flex align-items-center`}>
             <div className={`p-2 ${classes['emoji-div']}`}>
-                <i className="bi bi-emoji-smile" style={{fontSize: '20px'}} onClick={()=>setShowPicker(!showPicker)}></i>
+                <i className="bi bi-emoji-smile" style={{fontSize: '20px',cursor: 'pointer'}} onClick={()=>setShowPicker(!showPicker)}></i>
                 <div className={classes['picker-div']}>
                     {showPicker && <Picker onEmojiClick={handleEmojiSelect} />}
                 </div>

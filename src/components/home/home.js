@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { NavLink, Outlet, useNavigate, matchRoutes, useLocation } from 'react-router-dom';
+import { Link, Outlet, useNavigate, matchRoutes, useLocation } from 'react-router-dom';
 
 import { io } from "socket.io-client";
 import { connect } from 'react-redux';
@@ -37,7 +37,7 @@ const ChatMessages = props=>{
             props.setChat(props.user._id);
         }
     }, [props.user]);
-      
+    
     // useEffect(()=>{
     //     if(props.user){
     //         axios.get(`${usersApi}/${props.user._id}`)
@@ -61,23 +61,23 @@ const ChatMessages = props=>{
                 <ul className="nav nav-tabs nav-tabs-bordered">
 
                     <li className="nav-item">
-                        <NavLink to='/home' 
+                        <Link to='/home' 
                             className={`nav-link ${getPath().endsWith('home') ? 'active':null}`} 
                             data-bs-toggle="tab" 
-                            data-bs-target="#profile-overview">Chats</NavLink>
+                            data-bs-target="#profile-overview">Chats</Link>
                     </li>
 
                     <li className="nav-item">
-                        <NavLink to="/home/status" 
+                        <Link to="/home/status" 
                         className={`nav-link ${getPath().endsWith('status') ? 'active':null}`} 
                         data-bs-toggle="tab" 
-                        data-bs-target="#profile-edit">Status</NavLink>
+                        data-bs-target="#profile-edit">Status</Link>
                     </li>
 
                     <li className="nav-item">
-                        <NavLink to="/home/calls" 
+                        <Link to="/home/calls" 
                         className={`nav-link ${getPath().endsWith('calls') ? 'active':null}`} 
-                        data-bs-toggle="tab" data-bs-target="#profile-settings">Calls</NavLink>
+                        data-bs-toggle="tab" data-bs-target="#profile-settings">Calls</Link>
                     </li>
 
                 </ul>
@@ -91,7 +91,6 @@ const ChatMessages = props=>{
 }
 
 const mapPropsToState = state=>{
-    console.log(state)
     return {
         user : state.user,
         socket : state.socket,
@@ -101,7 +100,6 @@ const mapPropsToState = state=>{
 }
 
 const mapDispatchToProps = dispatch => {
-
     return {
         setChat : (id)=>dispatch(getChats(id)),
         setSocket : (soc)=>dispatch({type: setSocket, socket: soc}),
