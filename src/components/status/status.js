@@ -1,26 +1,27 @@
 
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
 import classes from './status.module.css';
+import axios from 'axios';
+import { getStatus } from '../../store/actionCreators/actionCreaters';
 
-const Status = ()=>{
-
+const Status = props=>{
+    useEffect(()=>{
+        console.log(props)
+        props.setStatus(props.user._id)
+    }, [])
     return (
         <>
             <div className="card">
                 <div className="card-header"><i className={`bi bi-person-plus ${classes.statusAddIcon}`}></i> <span className={`${classes.statusAddText}`}>Status</span> </div>
                 <div className="card-body">
                     <ul className={classes.statusList} id="">
-                        <li className={classes.statusListItem} >
+                        {props.status[0].status.map((item)=><li className={classes.statusListItem} >
                             <a className="" onClick={()=>1}>
                             <i className="bi bi-person"></i>
-                            <span>sdsd</span>
+                            <span>{item.datePosted}</span>
                             </a>
-                        </li>
-                        <li className={classes.statusListItem} >
-                            <a className="" onClick={()=>1}>
-                            <i className="bi bi-person"></i>
-                            <span>sdsd</span>
-                            </a>
-                        </li>
+                        </li>)}
                     </ul>
                 </div>
                 <div className="card-footer">
@@ -31,4 +32,19 @@ const Status = ()=>{
     )
 }
 
-export default Status;
+const mapStateToProps = state => {
+    console.log(state)
+    return {
+        socket : state.socket,
+        status : state.status,
+        user : state.user
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setStatus : (id)=>dispatch(getStatus(id))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Status);

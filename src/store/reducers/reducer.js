@@ -1,9 +1,10 @@
-import { setChats, setCurrentChat, setSocket, userAdd } from "../actions/actions";
+import { setChats, setCurrentChat, setSocket, setStatus, userAdd } from "../actions/actions";
 
 const initState = {
     user : null,
     socket : null,
     chats : [],
+    status : [],
     currentChat: null
 }
 
@@ -29,6 +30,11 @@ const reducer = (state=initState, action)=>{
             return {
                 ...state,
                 currentChat : action.chat
+            }
+        case setStatus :
+            return {
+                ...state,
+                status : action.status
             }
     }
     return state
